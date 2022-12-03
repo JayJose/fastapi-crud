@@ -20,7 +20,7 @@ def get_users(session: Session = Depends(get_session)):
 
 @router.get("/{id}", response_model=User)
 def get_user_by_id(id: int, session: Session = Depends(get_session)):
-    """Return a specific user."""
+    """Return a specified user."""
     user = session.get(User, id)
     if user:
         return user
@@ -32,8 +32,24 @@ def get_user_by_id(id: int, session: Session = Depends(get_session)):
 
 @router.post("/", response_model=User)
 def add_user(user_input: UserInput, session: Session = Depends(get_session)) -> User:
-    new_user = User.from_orm(user_input)
+    """Add a new user"""
+    print(user_input.username)
+    new_user = User(username=user_input.username)
+    new_user.set_password(user_input.password)
     session.add(new_user)
     session.commit()
     session.refresh(new_user)
     return new_user
+
+
+@router.delete("/{id}", status_code=204)
+def delete_user(id: int, session: Session = Depends(get_session)) -> None:
+    """Delete a specified user."""
+    user = session.get(User, id)
+    if user:
+        session.delete(user)
+        session.commit()
+    else:
+        raise HTTPException(
+            status_code=404, detail=f"No user with an id of {id} exists."
+        )
