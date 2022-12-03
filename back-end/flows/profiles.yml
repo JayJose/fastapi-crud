@@ -1,0 +1,4 @@
+default:
+  outputs:
+    dev: {}
+  target: dev
