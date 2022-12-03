@@ -1,0 +1,5 @@
+fastapi[all] # version 0.88.0 as of 3 Dec 2022
+passlib[bcrypt]
+psycopg2-binary
+pydantic==1.10.2
+sqlmodel==0.0.8
