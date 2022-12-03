@@ -4,10 +4,12 @@ from sqlmodel import SQLModel
 
 # need to import models before calling create_all
 from schemas import users
+from schemas import systems
 
 from database import engine
 import routers.root
 import routers.users
+import routers.systems
 from config import settings
 
 app = FastAPI(
@@ -26,6 +28,7 @@ prefix = settings.API_PREFIX
 
 app.include_router(routers.root.router, prefix=prefix)
 app.include_router(routers.users.router, prefix=prefix)
+app.include_router(routers.systems.router, prefix=prefix)
 
 origins = ["*"]
 
