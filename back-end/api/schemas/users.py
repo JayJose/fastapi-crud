@@ -1,7 +1,34 @@
-from sqlmodel import SQLModel, Field, Relationship, Column, VARCHAR
+from datetime import datetime
 from passlib.context import CryptContext
+from sqlmodel import SQLModel, Field, Relationship, Column, VARCHAR
 
 pwd_context = CryptContext(schemes=["bcrypt"])
+
+
+class User(SQLModel, table=True):
+    """
+    ## Users
+    A table of users.
+    #### Columns
+    * id
+    * password_hash
+    * created_at
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    username: str = Field(
+        sa_column=Column("username", VARCHAR, unique=True, index=True)
+    )
+    password_hash: str = ""
+    created_at: datetime = datetime.now()
+
+    def set_password(self, password):
+        """Set the hashed password."""
+        self.password_hash = pwd_context.hash(password)
+
+    def verify_password(self, password):
+        """Verify the hashed password."""
+        return pwd_context.verify(password, self.password_hash)
 
 
 class UserInput(SQLModel):
@@ -12,19 +39,4 @@ class UserInput(SQLModel):
 class UserOutput(SQLModel):
     id: int
     username: str
-
-
-class User(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    username: str = Field(
-        sa_column=Column("username", VARCHAR, unique=True, index=True)
-    )
-    password_hash: str = ""
-
-    def set_password(self, password):
-        """Set the hashed password."""
-        self.password_hash = pwd_context.hash(password)
-
-    def verify_password(self, password):
-        """Verify the hashed password."""
-        return pwd_context.verify(password, self.password_hash)
+    created_at: datetime

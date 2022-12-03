@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
-from schemas.users import User, UserInput
+from schemas.users import User, UserInput, UserOutput
 
 from database import get_session
 
@@ -30,10 +30,9 @@ def get_user_by_id(id: int, session: Session = Depends(get_session)):
         )
 
 
-@router.post("/", response_model=User)
+@router.post("/", response_model=UserOutput)
 def add_user(user_input: UserInput, session: Session = Depends(get_session)) -> User:
     """Add a new user"""
-    print(user_input.username)
     new_user = User(username=user_input.username)
     new_user.set_password(user_input.password)
     session.add(new_user)
