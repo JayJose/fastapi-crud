@@ -22,3 +22,9 @@ services:
     restart: always
     volumes:
       - ./back-end/db/data:/var/lib/postgresql/data      
+
+  webapp:
+    build: ./front-end
+    container_name: webapp
+    ports:
+     - 3000:3000
