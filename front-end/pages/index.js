@@ -1,12 +1,28 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useState } from "react";
+
 import Head from "next/head";
+import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/Home.module.css";
 
 import Form from "../components/Form";
 import Table from "../components/Table";
 import { Stack } from "react-bootstrap";
 
+import getData from "../lib/getData";
+
 export default function Home() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getData("http://localhost:8000/api/users/", setUsers);
+  }, [users]);
+
+  function formatDate(date) {
+    let options = { hour: "2-digit", minute: "2-digit" };
+    let newDate = new Date(date);
+    return newDate.toLocaleDateString("en-US", options);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,7 +33,7 @@ export default function Home() {
         <h4>Create a new user</h4>
         <Form />
         <h4>Displaying current users</h4>
-        <Table />
+        <Table data={users} />
       </Stack>
     </div>
   );

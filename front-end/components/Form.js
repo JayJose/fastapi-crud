@@ -2,9 +2,7 @@ import { useRef, useState } from "react";
 import { Form, Stack, Row, Col, Button } from "react-bootstrap";
 import postData from "../lib/postData";
 
-export default function MyForm() {
-  const [message, setMessage] = useState();
-
+export default function MyForm({ onSuccess }) {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
@@ -16,6 +14,7 @@ export default function MyForm() {
     }).then((data) => {
       if (data) {
         console.log(data);
+        onSuccess;
       }
     });
     e.target.reset();

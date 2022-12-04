@@ -1,20 +1,7 @@
-import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import getData from "../lib/getData";
+import formatDate from "../lib/formatDate";
 
-export default function MyTable() {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    getData("http://localhost:8000/api/users/", setUsers);
-  }, []);
-
-  function formatDate(date) {
-    let options = { hour: "2-digit", minute: "2-digit" };
-    let newDate = new Date(date);
-    return newDate.toLocaleDateString("en-US", options);
-  }
-
+export default function MyTable({ data }) {
   return (
     <Table striped bordered hover>
       <thead>
@@ -25,7 +12,7 @@ export default function MyTable() {
         </tr>
       </thead>
       <tbody>
-        {users.map((e) => {
+        {data.map((e) => {
           return (
             <tr key={e.id}>
               <td>{e.id}</td>
