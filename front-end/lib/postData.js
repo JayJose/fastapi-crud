@@ -8,8 +8,9 @@ export default async function postData(url, data) {
       body: JSON.stringify(data),
     });
     if (response.status === 201) {
-      console.log("POST successful!");
       return response.json();
+    } else {
+      throw new Error("Something went wrong");
     }
   } catch (err) {
     console.log(err);

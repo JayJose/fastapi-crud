@@ -14,7 +14,9 @@ export default function MyForm() {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     }).then((data) => {
-      console.log(data);
+      if (data) {
+        console.log(data);
+      }
     });
     e.target.reset();
   }
