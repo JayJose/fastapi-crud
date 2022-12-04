@@ -35,12 +35,20 @@ def get_user_by_id(id: int, session: Session = Depends(get_session)):
 @router.post("/", response_model=UserOutput, status_code=201)
 def add_user(user_input: UserInput, session: Session = Depends(get_session)) -> User:
     """Add a new user"""
-    new_user = User(username=user_input.username)
-    new_user.set_password(user_input.password)
-    session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
-    return new_user
+    statement = select(User).where(User.username == user_input.username)
+    results = session.exec(statement).first()
+    if results:
+        raise HTTPException(
+            status_code=409,
+            detail=f"A user with the username {user_input.username} already exists.",
+        )
+    else:
+        new_user = User(username=user_input.username)
+        new_user.set_password(user_input.password)
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
+        return new_user
 
 
 @router.delete("/{id}", status_code=204)

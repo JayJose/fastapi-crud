@@ -22,37 +22,12 @@ export default function Form() {
       let res = await req.json();
       if (req.status === 201) {
         console.log(res);
-        setMessage("User created successfully!");
-        console.log(message);
-      } else {
-        setMessage("Something went wrong.");
-        console.log(message);
+        console.log("User successfully created.");
       }
     } catch (err) {
       console.log(err);
     }
   }
-
-  //     try {
-  //       let res = await fetch("https://httpbin.org/post", {
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           name: name,
-  //           password: password,
-  //         }),
-  //       });
-  //       let resJson = await res.json();
-  //       if (res.status === 200) {
-  //         setName("");
-  //         setEmail("");
-  //         setMessage("User created successfully");
-  //       } else {
-  //         setMessage("Some error occured");
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
 
   return (
     <div className="App">
