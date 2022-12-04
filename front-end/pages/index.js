@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
