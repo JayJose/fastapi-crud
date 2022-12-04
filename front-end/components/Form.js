@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Form, Stack, Row, Col, Button } from "react-bootstrap";
+import postData from "../lib/postData";
 
 export default function MyForm() {
   const [message, setMessage] = useState();
@@ -9,25 +10,13 @@ export default function MyForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      let req = await fetch("http://localhost:8000/api/users/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: usernameRef.current.value,
-          password: passwordRef.current.value,
-        }),
-      });
-      let res = await req.json();
-      if (req.status === 201) {
-        console.log(res);
-        console.log("User successfully created.");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    await postData("http://localhost:8000/api/users/", {
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
+    }).then((data) => {
+      console.log(data);
+    });
+    e.target.reset();
   }
 
   return (

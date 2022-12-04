@@ -1,19 +1,13 @@
+import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import getData from "../lib/getData";
 
 export default function MyTable() {
-  //get data
-  const data = [
-    {
-      id: 1,
-      username: "johnny69",
-      created_at: "2022-12-03T18:19:08.568813",
-    },
-    {
-      id: 2,
-      username: "jayjose",
-      created_at: "2022-12-04T16:46:42.312103",
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getData("http://localhost:8000/api/users/", setUsers);
+  }, []);
 
   function formatDate(date) {
     let options = { hour: "2-digit", minute: "2-digit" };
@@ -31,9 +25,9 @@ export default function MyTable() {
         </tr>
       </thead>
       <tbody>
-        {data.map((e) => {
+        {users.map((e) => {
           return (
-            <tr>
+            <tr key={e.id}>
               <td>{e.id}</td>
               <td>{e.username}</td>
               <td>{formatDate(e.created_at)}</td>
