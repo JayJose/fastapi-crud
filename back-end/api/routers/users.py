@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from typing import List
 
+
 from schemas.users import User, UserInput, UserOutput
 
 from database import get_session
@@ -31,7 +32,7 @@ def get_user_by_id(id: int, session: Session = Depends(get_session)):
         )
 
 
-@router.post("/", response_model=UserOutput)
+@router.post("/", response_model=UserOutput, status_code=201)
 def add_user(user_input: UserInput, session: Session = Depends(get_session)) -> User:
     """Add a new user"""
     new_user = User(username=user_input.username)
