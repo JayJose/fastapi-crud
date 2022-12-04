@@ -2,7 +2,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from typing import List
 
-from schemas.systems import System, SystemInput, SystemOutput
+from schemas.systems import (
+    System,
+    SystemInput,
+    SystemOutput,
+    School,
+    SchoolInput,
+    SchoolOutput,
+)
 
 from database import get_session
 
@@ -50,6 +57,23 @@ def delete_system(id: int, session: Session = Depends(get_session)) -> None:
     if system:
         session.delete(system)
         session.commit()
+    else:
+        raise HTTPException(
+            status_code=404, detail=f"No system with an id of {id} exists."
+        )
+
+
+@router.post("/{system_id}/schools", response_model=School)
+def add_school(
+    system_id: int, school_input: SchoolInput, session: Session = Depends(get_session)
+) -> School:
+    system = session.get(System, system_id)
+    if system:
+        new_school = School.from_orm(school_input, update={"system_id": system_id})
+        system.schools.append(new_school)
+        session.commit()
+        session.refresh(new_school)
+        return new_school
     else:
         raise HTTPException(
             status_code=404, detail=f"No system with an id of {id} exists."

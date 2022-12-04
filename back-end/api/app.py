@@ -10,7 +10,6 @@ from database import engine
 import routers.root
 import routers.users
 import routers.systems
-import routers.schools
 from config import settings
 
 app = FastAPI(
@@ -30,7 +29,6 @@ prefix = settings.API_PREFIX
 app.include_router(routers.root.router, prefix=prefix)
 app.include_router(routers.users.router, prefix=prefix)
 app.include_router(routers.systems.router, prefix=prefix)
-app.include_router(routers.schools.router, prefix=prefix)
 
 origins = ["*"]
 
