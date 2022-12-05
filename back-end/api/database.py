@@ -11,8 +11,7 @@ port = settings.POSTGRES_PORT
 
 
 POSTGRES_URL = f"postgresql://{user}:{password}@{host}:{port}/{db}"
-print(POSTGRES_URL)
-engine = create_engine(POSTGRES_URL, echo=True)  # log the generated SQL
+engine = create_engine(POSTGRES_URL, echo=True)  # echo: log the generated SQL
 
 
 def get_session():

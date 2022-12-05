@@ -2,14 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
 
-# need to import models before calling create_all
-from schemas import users
-from schemas import systems
-
 from database import engine
-import routers.root
-import routers.users
-import routers.systems
+from routers import root, users, systems
 from config import settings
 
 app = FastAPI(
@@ -18,17 +12,10 @@ app = FastAPI(
     version=settings.API_VERSION,
 )
 
-
-@app.on_event("startup")
-def on_startup():
-    SQLModel.metadata.create_all(engine)
-
-
 prefix = settings.API_PREFIX
-
-app.include_router(routers.root.router, prefix=prefix)
-app.include_router(routers.users.router, prefix=prefix)
-app.include_router(routers.systems.router, prefix=prefix)
+app.include_router(root.router, prefix=prefix)
+app.include_router(users.router, prefix=prefix)
+app.include_router(systems.router, prefix=prefix)
 
 origins = ["*"]
 
@@ -39,3 +26,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.on_event("startup")
+def on_startup():
+    SQLModel.metadata.create_all(engine)
