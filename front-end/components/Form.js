@@ -1,20 +1,23 @@
 import { useRef, useState } from "react";
 import { Form, Stack, Row, Col, Button } from "react-bootstrap";
+import getData from "../lib/getData";
 import postData from "../lib/postData";
 
-export default function MyForm({ onSuccess }) {
+export default function MyForm({ setData }) {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
+  const url = "http://localhost:8000/api/users/";
+
   async function handleSubmit(e) {
     e.preventDefault();
-    await postData("http://localhost:8000/api/users/", {
+    await postData(url, {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     }).then((data) => {
       if (data) {
         console.log(data);
-        onSuccess;
+        getData(url, setData);
       }
     });
     e.target.reset();

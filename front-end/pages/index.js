@@ -14,14 +14,9 @@ export default function Home() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    console.log("running useEffect");
     getData("http://localhost:8000/api/users/", setUsers);
   }, []);
-
-  function formatDate(date) {
-    let options = { hour: "2-digit", minute: "2-digit" };
-    let newDate = new Date(date);
-    return newDate.toLocaleDateString("en-US", options);
-  }
 
   return (
     <div className={styles.container}>
@@ -31,9 +26,7 @@ export default function Home() {
       </Head>
       <Stack directional="vertical" gap={4} className="col-md-10 mx-auto my-5">
         <h4>Create a new user</h4>
-        <Form
-          onSuccess={getData("http://localhost:8000/api/users/", setUsers)}
-        />
+        <Form setData={setUsers} />
         <h4>Displaying current users</h4>
         <Table data={users} />
       </Stack>

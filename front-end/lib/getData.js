@@ -1,5 +1,6 @@
 export default async function getData(url, setData) {
   try {
+    console.log("running getData");
     let req = await fetch(url, {
       method: "GET",
       headers: {
