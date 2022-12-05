@@ -33,7 +33,9 @@ def get_user_by_id(id: int, session: Session = Depends(get_session)):
 
 
 @router.post("/", response_model=UserOutput, status_code=201)
-def add_user(user_input: UserInput, session: Session = Depends(get_session)) -> User:
+def add_user(
+    user_input: UserInput, session: Session = Depends(get_session)
+) -> UserOutput:
     """Add a new user"""
     statement = select(User).where(User.username == user_input.username)
     results = session.exec(statement).first()

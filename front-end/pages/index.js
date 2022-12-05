@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     getData("http://localhost:8000/api/users/", setUsers);
-  }, [users]);
+  }, []);
 
   function formatDate(date) {
     let options = { hour: "2-digit", minute: "2-digit" };
@@ -31,7 +31,9 @@ export default function Home() {
       </Head>
       <Stack directional="vertical" gap={4} className="col-md-10 mx-auto my-5">
         <h4>Create a new user</h4>
-        <Form />
+        <Form
+          onSuccess={getData("http://localhost:8000/api/users/", setUsers)}
+        />
         <h4>Displaying current users</h4>
         <Table data={users} />
       </Stack>
