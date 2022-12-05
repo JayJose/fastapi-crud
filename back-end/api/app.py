@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
 
 from database import engine
-from routers import root, users, systems
+from routers import datastore, root, systems, users
 from config import settings
 
 app = FastAPI(
@@ -16,6 +16,7 @@ prefix = settings.API_PREFIX
 app.include_router(root.router, prefix=prefix)
 app.include_router(users.router, prefix=prefix)
 app.include_router(systems.router, prefix=prefix)
+app.include_router(datastore.router, prefix=prefix)
 
 origins = ["*"]
 
