@@ -1,7 +1,19 @@
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import formatDate from "../lib/formatDate";
+import deleteData from "../lib/deleteData";
+import getData from "../lib/getData";
 
-export default function MyTable({ data }) {
+export default function MyTable({ data, setData }) {
+  const url = "http://localhost:8000/api/users/";
+
+  async function onDelete(id) {
+    await deleteData(url, id).then((data) => {
+      if (data === "Delete successful.") {
+        getData(url, setData);
+      }
+    });
+  }
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -9,6 +21,7 @@ export default function MyTable({ data }) {
           <th>Id</th>
           <th>Username</th>
           <th>Created on</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +31,17 @@ export default function MyTable({ data }) {
               <td>{e.id}</td>
               <td>{e.username}</td>
               <td>{formatDate(e.created_at)}</td>
+              <td>
+                <Button
+                  type="button"
+                  variant="danger"
+                  size="sm"
+                  className="button--danger"
+                  onClick={() => onDelete(e.id)}
+                >
+                  Delete
+                </Button>
+              </td>
             </tr>
           );
         })}

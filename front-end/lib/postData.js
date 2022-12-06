@@ -1,5 +1,6 @@
 export default async function postData(url, data) {
   try {
+    console.log("running postData");
     let response = await fetch(url, {
       method: "POST",
       headers: {

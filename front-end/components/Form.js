@@ -56,9 +56,6 @@ export default function MyForm({ setData }) {
           <Button type="submit" variant="primary">
             Submit
           </Button>
-          <Button type="button" variant="outline-secondary">
-            Cancel
-          </Button>
         </Stack>
       </Stack>
     </Form>

@@ -28,7 +28,7 @@ export default function Home() {
         <h4>Create a new user</h4>
         <Form setData={setUsers} />
         <h4>Displaying current users</h4>
-        <Table data={users} />
+        <Table data={users} setData={setUsers} />
       </Stack>
     </div>
   );
