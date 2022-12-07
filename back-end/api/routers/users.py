@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
 from sqlmodel import Session, select
 from typing import List
-
 
 from schemas.users import User, UserInput, UserOutput
 
@@ -11,6 +12,9 @@ prefix = "/users"
 router = APIRouter(
     prefix=f"{prefix}", tags=[prefix], responses={404: {"description": "Not found."}}
 )
+
+#### security
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @router.get("/", response_model=List[UserOutput])
@@ -45,7 +49,7 @@ def add_user(
             detail=f"A user with the username {user_input.username} already exists.",
         )
     else:
-        new_user = User(username=user_input.username)
+        new_user = User(username=user_input.username, disabled=user_input.disabled)
         new_user.set_password(user_input.password)
         session.add(new_user)
         session.commit()

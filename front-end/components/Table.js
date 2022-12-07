@@ -20,6 +20,7 @@ export default function MyTable({ data, setData }) {
         <tr>
           <th>Id</th>
           <th>Username</th>
+          <th>Disabled</th>
           <th>Created on</th>
           <th>Action</th>
         </tr>
@@ -30,6 +31,7 @@ export default function MyTable({ data, setData }) {
             <tr key={e.id}>
               <td>{e.id}</td>
               <td>{e.username}</td>
+              <td>{String(e.disabled)}</td>
               <td>{formatDate(e.created_at)}</td>
               <td>
                 <Button

@@ -6,6 +6,7 @@ import postData from "../lib/postData";
 export default function MyForm({ setData }) {
   const usernameRef = useRef();
   const passwordRef = useRef();
+  const disabledRef = useRef();
 
   const url = "http://localhost:8000/api/users/";
 
@@ -14,6 +15,7 @@ export default function MyForm({ setData }) {
     await postData(url, {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
+      disabled: disabledRef.current.value,
     }).then((data) => {
       if (data) {
         console.log(data);
@@ -35,11 +37,11 @@ export default function MyForm({ setData }) {
                 type="text"
                 ref={usernameRef}
                 placeholder="Enter a username."
-              ></Form.Control>
+              />
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="formBasicPassword]">
+            <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
@@ -51,10 +53,19 @@ export default function MyForm({ setData }) {
               </Form.Text>
             </Form.Group>
           </Col>
+          <Col>
+            <Form.Group controlId="formBasicDisablied">
+              <Form.Label>Disabled?</Form.Label>
+              <Form.Select ref={disabledRef}>
+                <option value="false">False</option>
+                <option value="true">True</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
         </Row>
         <Stack direction="horizontal" gap={2} className={"justify-content-end"}>
           <Button type="submit" variant="primary">
-            Submit
+            Create
           </Button>
         </Stack>
       </Stack>

@@ -12,6 +12,7 @@ class User(SQLModel, table=True):
     #### Columns
     * id
     * password_hash
+    * disabled (default: False)
     * created_at
     """
 
@@ -19,7 +20,8 @@ class User(SQLModel, table=True):
     username: str = Field(
         sa_column=Column("username", VARCHAR, unique=True, index=True)
     )
-    password_hash: str = ""
+    password_hash: str
+    disabled: bool
     created_at: datetime = datetime.now()
 
     def set_password(self, password):
@@ -34,9 +36,11 @@ class User(SQLModel, table=True):
 class UserInput(SQLModel):
     username: str
     password: str
+    disabled: bool = False
 
 
 class UserOutput(SQLModel):
     id: int
     username: str
+    disabled: bool
     created_at: datetime
