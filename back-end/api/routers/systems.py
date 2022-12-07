@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from typing import List
 
 from schemas.systems import (
     System,
@@ -19,7 +18,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[SystemOutput])
+@router.get("/", response_model=list[SystemOutput])
 def get_systems(session: Session = Depends(get_session)) -> SystemOutput:
     """Return a list of systems."""
     query = select(System)

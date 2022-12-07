@@ -2,7 +2,7 @@ from datetime import datetime
 from passlib.context import CryptContext
 from sqlmodel import SQLModel, Field, Relationship, Column, VARCHAR
 
-pwd_context = CryptContext(schemes=["bcrypt"])
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class User(SQLModel, table=True):
