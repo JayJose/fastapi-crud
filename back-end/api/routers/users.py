@@ -4,6 +4,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from sqlmodel import Session, select
 
+from config import settings
+
 from schemas.users import User, UserInput, UserOutput
 from schemas.tokens import Token, TokenData
 
@@ -15,7 +17,7 @@ router = APIRouter(
 )
 
 #### SECURITY
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_PREFIX}{prefix}/token")
 SECRET_KEY = "d0c51c14ba233550d76862e4e37ce58aff00de8801ef97af3b30f57c42bb2d5a"  # `openssl rand -hex 32`
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

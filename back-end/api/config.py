@@ -7,7 +7,7 @@ class Settings(pydantic.BaseSettings):
     # project config
     API_TITLE: str = "An API title"
     API_DESCRIPTION: str = "An API description"
-    API_PREFIX: str = "/api"
+    API_PREFIX: str = "/api/v0"
     API_VERSION: str = "0.0.0"
     API_LICENSE_NAME: str = "Apache 2.0"
     API_LICENSE_URL: str = "https://www.apache.org/licenses/LICENSE-2.0.html"
