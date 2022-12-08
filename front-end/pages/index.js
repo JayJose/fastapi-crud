@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log("running useEffect");
-    getData("http://localhost:8000/api/users/", setUsers);
+    getData("http://localhost:8000/api/v0/users/", setUsers);
   }, []);
 
   return (

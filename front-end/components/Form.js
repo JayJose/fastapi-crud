@@ -8,7 +8,7 @@ export default function MyForm({ setData }) {
   const passwordRef = useRef();
   const disabledRef = useRef();
 
-  const url = "http://localhost:8000/api/users/";
+  const url = "http://localhost:8000/api/v0/users/";
 
   async function handleSubmit(e) {
     e.preventDefault();

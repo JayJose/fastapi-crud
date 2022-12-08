@@ -4,7 +4,7 @@ import deleteData from "../lib/deleteData";
 import getData from "../lib/getData";
 
 export default function MyTable({ data, setData }) {
-  const url = "http://localhost:8000/api/users/";
+  const url = "http://localhost:8000/api/v0/users/";
 
   async function onDelete(id) {
     await deleteData(url, id).then((data) => {
